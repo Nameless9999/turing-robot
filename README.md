@@ -1,0 +1,1 @@
+图灵API: http://wap.tuling123.com/help/h_cent_webapi.jhtml?nav=doc

@@ -1,0 +1,19 @@
+{
+	"name": "turing-robot",
+	"version": "0.1.1",
+	"description": "turing robot",
+	"main": "index.js",
+	"scripts": {
+		"start": "node bin/chat",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"bin": {
+		"turing-robot": "./bin/chat" 
+	},
+	"keywords": [
+		"turing",
+		"robot"
+	],
+	"author": "n0ruSh",
+	"license": "MIT"
+}
