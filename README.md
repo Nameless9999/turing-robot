@@ -11,7 +11,7 @@ npm install turing-robot –g
 ![image](./images/turing-robot.png)
 
 # Licence
-[MIT](./LICENSE)
+[MIT](./LICENCE)
 
 # 感谢
 感谢[图灵API](http://wap.tuling123.com/help/h_cent_webapi.jhtml?nav=doc)提供API.
