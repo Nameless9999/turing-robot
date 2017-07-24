@@ -1,6 +1,6 @@
 {
 	"name": "turing-robot",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "turing robot",
 	"main": "index.js",
 	"scripts": {
@@ -8,7 +8,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"bin": {
-		"turing-robot": "./bin/chat" 
+		"turing-robot": "./bin/chat.js"
 	},
 	"keywords": [
 		"turing",
