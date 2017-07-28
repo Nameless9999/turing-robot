@@ -4,7 +4,7 @@
 npm install turing-robot –g
 ```
 
->提示2: 如果已经安装过 turing-robot, 请使用更新命令 `npm update nei -g`
+>提示2: 如果已经安装过 turing-robot, 请使用更新命令 `npm update turing-robot -g`
 
 # 样例
 
