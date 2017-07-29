@@ -1,18 +1,21 @@
-const colors = require('./color'),
-      readline = require('readline'),
-      http = require('http'),
-      appKey = '6824998c8b574bd1bba7ba5363a341ab',
-      RESPONSE_TYPE = {
-          TEXT: 100000,
-          LINK: 200000,
-          NEWS: 302000,
-          RECIPE: 308000
-      };
+let colors = require('./color'),
+    readline = require('readline'),
+    http = require('http');
 
-function chat() {
-    Array.prototype.forEach.call('请开始你的表演', (it) => {
-        console.log(colors.colorify(`----------------`, it, `----------------`));
-    });
+const API_KEY = '6824998c8b574bd1bba7ba5363a341ab';
+
+const RESPONSE_TYPE = {
+    TEXT: 100000,
+    LINK: 200000,
+    NEWS: 302000
+}
+
+function initChat() {
+    let welcomeMsg = '请开始你的表演';
+    Array.prototype.forEach.call(welcomeMsg, (it) => {
+        colors.colorLog('-----------', it, '-----------');
+    })
+
 
     const rl = readline.createInterface({
         input: process.stdin,
@@ -21,69 +24,63 @@ function chat() {
 
     let name = '';
 
-    rl.question(colors.colorify('> 阁下尊姓大名: '), (answer) => {
+    rl.question('> 阁下尊姓大名: ',  (answer) => {
         name = answer;
-        colors.colorLog('客官请提问!');
+        colors.colorLog('客官请提问！');
         chat();
     });
 
     function chat() {
-        rl.question(colors.colorify('> 请输入你的问题: '), (query) => {
+        rl.question('> 请输入你的问题: ', (query) => {
             if(!query) {
-                colors.colorLog('客官请慢走!');
-                rl.close();
+                colors.colorLog('客官请慢走');
                 process.exit(0);
             }
-        
-            const req = http.request({
-                method: 'POST',
-                host: 'openapi.tuling123.com',
+            let req = http.request({
+                hostname: 'www.tuling123.com',
                 path: '/openapi/api',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }  
+                }
             }, (res) => {
-                let result = '';
+                let data = '';
                 res.on('data', (chunk) => {
-                    result += chunk;
+                    data += chunk;
                 });
                 res.on('end', () => {
-                    colors.colorLog(handleResponse(result));
+                    colors.colorLog(handleResponse(data));
                     chat();
-                });
-            }).on('error', (err) => {
-                console.log(err);
+                })
             });
 
             req.write(JSON.stringify({
-                key: appKey,
-                info: query
+                key: API_KEY,
+                info: query,
+                userid: name
             }));
 
             req.end();
         });
     }
 
-    function handleResponse(response) {
-        response = JSON.parse(response);
-        switch (response.code) {
+    function handleResponse(data) {
+        let res = JSON.parse(data);
+        switch(res.code) {
             case RESPONSE_TYPE.TEXT:
-                return response.text;
+                return res.text;
             case RESPONSE_TYPE.LINK:
-                return `${response.text} : ${response.url}`;
+                return `${res.text} : ${res.url}`;
             case RESPONSE_TYPE.NEWS:
-                return response.text + response.list.reduce(function(pre, current) {
-                    let recipes = [
-                        `文章：${current.article}`,
-                        `来源：${current.source}`,
-                        `链接：${current.detailurl}`,
-                    ]
-                    return pre + recipes.join('\n');
-                }, '');
+                let listInfo = '';
+                (res.list || []).forEach((it) => {
+                    listInfo += `\n文章: ${it.article}\n来源: ${it.source}\n链接: ${it.detailurl}`;
+                });
+                return `${res.text}\n${listInfo}`;
             default:
-                return responseText.text;
+                return res.text;
         }
     }
 }
 
-module.exports = chat;
+module.exports = initChat;

@@ -10,9 +10,9 @@
 	"bin": {
 		"turing-robot": "./bin/chat.js"
 	},
-	"repository" :{ 
-		"type" : "git",
-		"url" : "https://github.com/n0ruSh/turing-robot.git"
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/n0ruSh/turing-robot.git"
 	},
 	"bugs": {
 		"url": "https://github.com/n0ruSh/turing-robot/issues"

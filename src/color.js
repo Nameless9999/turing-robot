@@ -9,16 +9,22 @@ const colorMap = {
     "White": "\x1b[37m"
 };
 
-const colors = Object.values(colorMap);
+let colors = (function() {
+    let result = [];
+    Object.keys(colorMap).forEach((key) => {
+        result.push(colorMap[key]);
+    });
+    return result
+})();
+
+function pickRandomColor() {
+    let index = parseInt(Math.random() * colors.length);
+    return colors[index];
+}
 
 module.exports = {
-    colorify: (...args) => {
-        let index = parseInt(Math.random() * colors.length);
-        return [colors[index], ...args].join('');
-    },
-
-    colorLog: (...args) => {
-        let index = parseInt(Math.random() * colors.length);
-        console.log(colors[index], ...args);
+    colorLog: function(...args) {
+        let color = pickRandomColor();
+        console.log(color, ...args);
     }
 }
